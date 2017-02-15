@@ -10,13 +10,13 @@ import android.view.View;
  * Email:kingjavip@gmail.com
  */
 public class ProgressDialog extends BaseDialog {
-    protected ProgressDialog(Context context) {
+    public ProgressDialog(Context context) {
         super(context);
     }
 
     @Override
     protected int getContentView() {
-        return 0;
+        return R.layout.dialog_progress;
     }
 
     @Override
