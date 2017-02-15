@@ -1,5 +1,6 @@
 package com.kingja.venus;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +13,7 @@ import kingja.kdialog.ProgressDialog;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public final String TAG = MainActivity.this.getClass().getSimpleName();
     private DoubleDialog doubleDialog;
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .create();
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog.Builder(this)
+                .setTitle("正在加载")
+                .setOrientation(ProgressDialog.Orientation.vertical)
+                .create();
 
     }
 

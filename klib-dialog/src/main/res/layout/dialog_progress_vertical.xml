@@ -14,6 +14,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"/>
         <TextView
+            android:id="@+id/tv_progress_title"
             android:layout_marginTop="8dp"
             style="@style/font_9_15"
             android:text="loading"
