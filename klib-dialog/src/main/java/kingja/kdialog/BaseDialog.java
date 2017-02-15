@@ -9,6 +9,7 @@ import android.view.View;
 
 public abstract class BaseDialog extends AlertDialog implements View.OnClickListener {
     protected Context context;
+    protected final float DEFAULT_WIDTH_RATIO = 0.8f;
 
     protected BaseDialog(Context context) {
         super(context, R.style.CustomAlertDialog);

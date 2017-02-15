@@ -3,26 +3,31 @@ package kingja.kdialog;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 public class DoubleDialog extends BaseDialog {
     private String message;
-    private TextView tv_doubledialog_message;
+    private String leftBtnStr;
+    private String rightBtnStr;
+    private TextView tv_message;
     private RelativeLayout rl_btn_left;
     private RelativeLayout rl_btn_right;
     private TextView tv_btn_left;
     private TextView tv_btn_right;
-    private String leftBtnStr;
-    private String rightBtnStr;
+    private float widthRatio;
     private OnDoubleClickListener onDoubleClickListener;
+    private LinearLayout ll_root;
 
-    public DoubleDialog(Context context, String message, String leftBtnStr, String rightBtnStr, OnDoubleClickListener onDoubleClickListener) {
+    public DoubleDialog(Context context, String message, String leftBtnStr, String rightBtnStr,float widthRatio, OnDoubleClickListener onDoubleClickListener) {
         super(context);
         this.message = message;
         this.leftBtnStr = leftBtnStr;
         this.rightBtnStr = rightBtnStr;
+        this.widthRatio = widthRatio;
         this.onDoubleClickListener = onDoubleClickListener;
     }
 
@@ -33,22 +38,30 @@ public class DoubleDialog extends BaseDialog {
 
     @Override
     public void initView() {
-        tv_doubledialog_message = (TextView) findViewById(R.id.tv_message);
+        tv_message = (TextView) findViewById(R.id.tv_message);
         tv_btn_left = (TextView) findViewById(R.id.tv_btn_left);
         tv_btn_right = (TextView) findViewById(R.id.tv_btn_right);
         rl_btn_left = (RelativeLayout) findViewById(R.id.rl_btn_left);
         rl_btn_right = (RelativeLayout) findViewById(R.id.rl_btn_right);
+        ll_root = (LinearLayout) findViewById(R.id.ll_root);
     }
 
     @Override
     public void initEvent() {
         rl_btn_left.setOnClickListener(this);
         rl_btn_right.setOnClickListener(this);
+
+
+
     }
 
     @Override
     public void initData() {
-        tv_doubledialog_message.setText(message);
+        widthRatio=widthRatio==0?DEFAULT_WIDTH_RATIO:widthRatio;
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams((int) (widthRatio*Util.getScreenWidth(context)), ViewGroup.LayoutParams.WRAP_CONTENT);
+        ll_root.setLayoutParams(layoutParams);
+        tv_message.setText(message);
         tv_btn_left.setText(leftBtnStr);
         tv_btn_right.setText(rightBtnStr);
     }
@@ -64,9 +77,7 @@ public class DoubleDialog extends BaseDialog {
                 onDoubleClickListener.onRightClick();
             }
         }
-
     }
-
 
     public interface OnDoubleClickListener {
         void onLeftClick();
@@ -75,6 +86,7 @@ public class DoubleDialog extends BaseDialog {
     }
 
     public static class Builder {
+        private float widthRatio;
         private String message;
         private String leftBtnStr;
         private String rightBtnStr;
@@ -100,13 +112,18 @@ public class DoubleDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setWidthRatio(float widthRatio) {
+            this.widthRatio = widthRatio;
+            return this;
+        }
+
         public Builder setOnDoubleClickListener(OnDoubleClickListener onDoubleClickListener) {
             this.onDoubleClickListener = onDoubleClickListener;
             return this;
         }
 
         public DoubleDialog create() {
-            DoubleDialog doubleDialog = new DoubleDialog(context, message, leftBtnStr, rightBtnStr, onDoubleClickListener);
+            DoubleDialog doubleDialog = new DoubleDialog(context, message, leftBtnStr, rightBtnStr,widthRatio, onDoubleClickListener);
             return doubleDialog;
         }
     }

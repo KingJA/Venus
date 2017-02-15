@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setMessage("你好，请问有什么需要")
                 .setLeftBtnStr("取消")
                 .setRightBtnStr("确定")
+                .setWidthRatio(0.9f)
                 .setOnDoubleClickListener(new DoubleDialog.OnDoubleClickListener() {
                     @Override
                     public void onLeftClick() {
