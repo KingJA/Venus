@@ -50,9 +50,6 @@ public class DoubleDialog extends BaseDialog {
     public void initEvent() {
         rl_btn_left.setOnClickListener(this);
         rl_btn_right.setOnClickListener(this);
-
-
-
     }
 
     @Override
