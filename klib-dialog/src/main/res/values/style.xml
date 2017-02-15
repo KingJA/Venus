@@ -17,7 +17,7 @@
 
     <style name="font_9_15">
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/font_3</item>
+        <item name="android:textColor">@color/font_9</item>
     </style>
 
     <!--普通垂直分割线-->

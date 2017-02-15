@@ -16,7 +16,7 @@ public class ProgressDialog extends BaseDialog {
 
     @Override
     protected int getContentView() {
-        return R.layout.dialog_progress;
+        return R.layout.dialog_progress_vertical;
     }
 
     @Override
