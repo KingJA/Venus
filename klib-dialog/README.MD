@@ -1,9 +1,11 @@
 DID
-DoubleDialog
+### DoubleDialog
 * 宽度比例
 * 说明文字
 * 按钮触发事件
 
+### ProgressDialog
+
 TODO
 * SingleDialog
-* ProgressDialog
+* 枚举的用法
