@@ -26,4 +26,8 @@ public class MainActivity extends AppCompatActivity {
     public void openPopupwindowActivity(View view) {
         startActivity(new Intent(this, PopupwindowActivity.class));
     }
+     public void openProgressActivity(View view) {
+        startActivity(new Intent(this, ProgressActivity.class));
+    }
+
 }

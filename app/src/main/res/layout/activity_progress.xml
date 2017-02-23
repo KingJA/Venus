@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <lib.kingja.progress.MaterialProgress
+        app:cycleStyle="circle"
+        app:progressColor="#f16b6b"
+        app:progressWidth="2dp"
+        android:background="#c4c1c1"
+        android:layout_height="50dp"
+        android:layout_width="50dp" />
+
+
+</LinearLayout>

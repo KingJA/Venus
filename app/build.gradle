@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile project(':klib-dialog')
     compile project(':klib-popupwindow')
+    compile project(':klib-progress')
 }
