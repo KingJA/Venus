@@ -265,20 +265,12 @@ public class ProgressWheel extends View {
         }
     }
 
-    //----------------------------------
-    //Animation stuff
-    //----------------------------------
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //画内圈
         canvas.drawArc(circleBounds, 360, 360, false, rimPaint);
-
         boolean mustInvalidate = false;
-        //不允许动画则跳出，貌似这样
-        if (!shouldAnimate) {
-            return;
-        }
         //ProgressWheel_matProg_progressIndeterminate 为true则isSpinning为true
         if (isSpinning) {
             //Draw the spinning bar
@@ -310,40 +302,6 @@ public class ProgressWheel extends View {
             Log.e(TAG, "deltaTime  : " + deltaTime + "  mProgress  : " + mProgress + "  from   : " + from + " length : " + length);
             canvas.drawArc(circleBounds, from, length, false, barPaint);
         }
-
-//        else {
-//            float oldProgress = mProgress;
-//
-//            if (mProgress != mTargetProgress) {
-//                //We smoothly increase the progress bar
-//                mustInvalidate = true;
-//
-//                float deltaTime = (float) (SystemClock.uptimeMillis() - lastTimeAnimated) / 1000;
-//                float deltaNormalized = deltaTime * spinSpeed;
-//
-//                mProgress = Math.min(mProgress + deltaNormalized, mTargetProgress);
-//                lastTimeAnimated = SystemClock.uptimeMillis();
-//            }
-//
-//            if (oldProgress != mProgress) {
-//                runCallback();
-//            }
-//
-//            float offset = 0.0f;
-//            float progress = mProgress;
-//            if (!linearProgress) {
-//                float factor = 2.0f;
-//                offset = (float) (1.0f - Math.pow(1.0f - mProgress / 360.0f, 2.0f * factor)) * 360.0f;
-//                progress = (float) (1.0f - Math.pow(1.0f - mProgress / 360.0f, factor)) * 360.0f;
-//            }
-//
-//            if (isInEditMode()) {
-//                progress = 360;
-//            }
-//
-//            canvas.drawArc(circleBounds, offset - 90, progress, false, barPaint);
-//        }
-
         if (mustInvalidate) {
             invalidate();
         }

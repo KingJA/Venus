@@ -18,20 +18,20 @@ import android.view.View;
  * Email:kingjavip@gmail.com
  */
 public class MaterialProgress extends View {
-    private final float MIN_ANGLE = 16f;
-    private final int DEFAULT_PROGRESS_COLOR = 0xFF219F52;
-    private float spinSpeed = 270f / 1000;
+    private final float MIN_ANGLE = 16f;//最小角度
+    private final int DEFAULT_PROGRESS_COLOR = 0xFF219F52;//默认颜色
+    private float spinSpeed = 270f / 1000;//速度
     private int mProgress = 0;
     private Paint barPaint = new Paint();
     private int width;
     private int height;
     private RectF circleBounds;
-    private int offset;
+    private int offset;//笔触宽度的一半
     private boolean firstDraw = true;
     private int mRadius;
     private int mProgressColor;
     private int mProgressWidth;
-    private int mSrokeCap;
+    private int mSrokeCap;//画笔样式,方角圆角
     private long lastDrawTime = 0;
 
     public MaterialProgress(Context context) {
@@ -70,8 +70,8 @@ public class MaterialProgress extends View {
             timeStartGrowing = 0;
             barGrowingFromFront = true;
             pausedTimeWithoutGrowing = 0;
-            firstDraw=true;
-        }else{
+            firstDraw = true;
+        } else {
             Log.e(TAG, "看不见: ");
         }
     }
@@ -181,10 +181,10 @@ public class MaterialProgress extends View {
     }
 
     private void updateBarLength(long deltaTimeInMilliSeconds) {
-        if (pausedTimeWithoutGrowing >= pauseGrowingTime) {
+        if (pausedTimeWithoutGrowing >= pauseGrowingTime) {//0>200
             timeStartGrowing += deltaTimeInMilliSeconds;
 
-            if (timeStartGrowing > barSpinCycleTime) {
+            if (timeStartGrowing > barSpinCycleTime) {//460
                 // We completed a size change cycle
                 // (growing or shrinking)
                 timeStartGrowing -= barSpinCycleTime;
@@ -194,8 +194,7 @@ public class MaterialProgress extends View {
                 barGrowingFromFront = !barGrowingFromFront;
             }
 
-            float distance =
-                    (float) Math.cos((timeStartGrowing / barSpinCycleTime + 1) * Math.PI) / 2 + 0.5f;
+            float distance = (float) Math.cos((timeStartGrowing / barSpinCycleTime + 1) * Math.PI) / 2 + 0.5f;
             float destLength = (barMaxLength - MIN_ANGLE);
 
             if (barGrowingFromFront) {

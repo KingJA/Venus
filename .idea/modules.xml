@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/klib-dialog/klib-dialog.iml" filepath="$PROJECT_DIR$/klib-dialog/klib-dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/klib-popupwindow/klib-popupwindow.iml" filepath="$PROJECT_DIR$/klib-popupwindow/klib-popupwindow.iml" />
       <module fileurl="file://$PROJECT_DIR$/klib-progress/klib-progress.iml" filepath="$PROJECT_DIR$/klib-progress/klib-progress.iml" />
-      <module fileurl="file://$PROJECT_DIR$/klib-progress/libk-progress.iml" filepath="$PROJECT_DIR$/klib-progress/libk-progress.iml" />
     </modules>
   </component>
 </project>
