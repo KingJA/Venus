@@ -1,1 +1,1 @@
-include ':app', ':klib-dialog', ':klib-popupwindow', ':klib-progress'
+include ':app', ':klib-dialog', ':klib-popupwindow', ':klib-progress', ':klib-magicmirror'
