@@ -29,5 +29,8 @@ public class MainActivity extends AppCompatActivity {
      public void openProgressActivity(View view) {
         startActivity(new Intent(this, ProgressActivity.class));
     }
+     public void openMagicActivity(View view) {
+        startActivity(new Intent(this, MagicActivity.class));
+    }
 
 }

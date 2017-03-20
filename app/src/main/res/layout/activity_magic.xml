@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#17f2b8">
+
+    <com.kingja.magicmirror.MagicMirror
+        android:background="#b76868"
+        app:sharp="circle"
+        app:borderColor="#5c648e"
+        app:borderWidth="3dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/country"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <com.kingja.magicmirror.MagicMirror
+        android:background="#b76868"
+        app:borderWidth="2dp"
+        app:borderColor="#5c648e"
+        app:corner="20dp"
+        app:sharp="roundRect"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/country2"
+        android:layout_width="150dp"
+        android:layout_height="100dp"/>
+
+</LinearLayout>

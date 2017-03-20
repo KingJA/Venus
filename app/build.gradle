@@ -26,4 +26,5 @@ dependencies {
     compile project(':klib-dialog')
     compile project(':klib-popupwindow')
     compile project(':klib-progress')
+    compile project(':klib-magicmirror')
 }
