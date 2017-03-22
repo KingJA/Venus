@@ -5,17 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Description：TODO
@@ -25,15 +20,13 @@ import static android.content.ContentValues.TAG;
  */
 public class MagicMirror extends ImageView {
 
-    private int width;
     private Bitmap mBitmap;
     private Bitmap mOutBitmap;
-    private boolean isCircle;
     private int corner;
     private int borderWidth;
-    private int borderOffset;
-    private Paint borderPaint;
     private int borderColor;
+    private Paint borderPaint;
+    private Mirror mirror;
 
     public MagicMirror(Context context) {
         this(context, null);
@@ -50,29 +43,19 @@ public class MagicMirror extends ImageView {
         corner = dp2px(typedArray.getDimension(R.styleable.MagicMirror_corner, 0));
         borderWidth = dp2px(typedArray.getDimension(R.styleable.MagicMirror_borderWidth, 0));
         borderColor = typedArray.getColor(R.styleable.MagicMirror_borderColor, 0xffffff);
-        //画笔偏移
-        borderOffset = (int) (borderWidth *0.5f);
-
-        isCircle=sharpCode==0;
+        mirror = MirrorFactory.getMirror(sharpCode);
+        //TODO 把参数都放入Mirror中
         typedArray.recycle();
     }
 
-    private void initView() {
-//        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.head);
-        Log.e(TAG, "getWidth(): "+getWidth() );
+    private void initBitmap() {
         Drawable drawable = getDrawable();
         mBitmap = drawable2Bitmap(drawable);
-        mOutBitmap = Bitmap.createBitmap(getWidth(), getHeight()
-                , Bitmap.Config.ARGB_8888);
+        mOutBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mOutBitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
         //Dst
-        if (isCircle) {
-            canvas.drawCircle(getWidth() * 0.5f, getWidth() * 0.5f, getWidth() * 0.5f, paint);
-        }else{
-            canvas.drawRoundRect(new RectF(0, 0, getWidth()-borderOffset,getHeight()-borderOffset),corner,corner, paint);
-        }
+        mirror.drawSolid(canvas, getWidth(), getHeight(), corner);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         //Src
         canvas.drawBitmap(mBitmap, 0, 0, paint);
@@ -82,26 +65,17 @@ public class MagicMirror extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.e(TAG, "onDraw: " );
         canvas.drawBitmap(mOutBitmap, 0, 0, null);
-        if (isCircle) {
-            canvas.drawCircle(getWidth() * 0.5f, getWidth() * 0.5f, getWidth() * 0.5f-borderOffset, borderPaint);
-        }else{
-            canvas.drawRoundRect(new RectF(borderOffset, borderOffset, getWidth()-borderOffset,getHeight()-borderOffset),corner,corner, borderPaint);
-        }
-
+        mirror.drawStroke(canvas, getWidth(), getHeight(), corner, borderWidth, borderPaint);
     }
 
     private Bitmap drawable2Bitmap(Drawable drawable) {
-        Bitmap bitmap = Bitmap.createBitmap(
-                getWidth(),
-                getWidth(),
-                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                        : Bitmap.Config.RGB_565);
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getWidth(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        //canvas.setBitmap(bitmap);
-        drawable.setBounds(0, 0, getWidth(), getWidth());
-        drawable.draw(canvas);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, getWidth(), getWidth());
+            drawable.draw(canvas);
+        }
         return bitmap;
 
     }
@@ -109,22 +83,17 @@ public class MagicMirror extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
-        if (isCircle) {
-            setMeasuredDimension(size, size);
-        } else{
-            setMeasuredDimension(getMeasuredWidth(), getMeasuredHeight());
-        }
+        setMeasuredDimension(mirror.getMirrorMeasuredWidth(this), mirror.getMirrorMeasuredHeight(this));
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        initView();
-        initPaint();
+        initBitmap();
+        initBorderPaint();
     }
 
-    private void initPaint() {
+    private void initBorderPaint() {
         borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         borderPaint.setStrokeWidth(borderWidth);
         borderPaint.setStyle(Paint.Style.STROKE);
