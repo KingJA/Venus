@@ -11,23 +11,32 @@ import android.graphics.RectF;
  * Email:kingjavip@gmail.com
  */
 public class RoundRectMirror extends Mirror {
+    private int mRoundRectMirrorWidth;
+    private int mRoundRectMirrorHeight;
     @Override
-    int getMirrorMeasuredWidth(MagicMirror magicMirror) {
-        return magicMirror.getMeasuredWidth();
+    int getMeasuredMirrorWidth(MagicMirror magicMirror) {
+        this.mRoundRectMirrorWidth=magicMirror.getMeasuredWidth();
+        return mRoundRectMirrorWidth;
     }
 
     @Override
-    int getMirrorMeasuredHeight(MagicMirror magicMirror) {
-        return magicMirror.getMeasuredHeight();
+    int getMeasuredMirrorHeight(MagicMirror magicMirror) {
+        this.mRoundRectMirrorHeight=magicMirror.getMeasuredHeight();
+        return mRoundRectMirrorHeight;
     }
 
     @Override
-    void drawSolid(Canvas canvas, int width, int height,int corner) {
-        canvas.drawRoundRect(new RectF(0, 0, width, height), corner, corner, paint);
+    void drawSolid(Canvas canvas) {
+        canvas.drawRoundRect(new RectF(0, 0, mRoundRectMirrorWidth, mRoundRectMirrorHeight), getCorner(), getCorner(), new Paint(Paint.ANTI_ALIAS_FLAG));
     }
 
     @Override
-    void drawStroke(Canvas canvas, int width, int height, int corner, int borderWidth, Paint borderPaint) {
-        canvas.drawRoundRect(new RectF(borderWidth*0.5f, borderWidth*0.5f, width - borderWidth*0.5f, height - borderWidth*0.5f), corner, corner, borderPaint);
+    void drawStroke(Canvas canvas) {
+        canvas.drawRoundRect(new RectF(getBorderWidth()*0.5f, getBorderWidth()*0.5f, mRoundRectMirrorWidth - getBorderWidth()*0.5f, mRoundRectMirrorHeight - getBorderWidth()*0.5f), (getCorner()*(mRoundRectMirrorWidth-getOffset()))/mRoundRectMirrorWidth, (getCorner()*(mRoundRectMirrorHeight-getOffset()))/mRoundRectMirrorHeight, getStrokePaint());
     }
+
+    private int getOffset() {
+        return (int) (0.5f*getBorderWidth());
+    }
+
 }

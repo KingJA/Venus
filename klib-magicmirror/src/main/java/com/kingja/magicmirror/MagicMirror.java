@@ -25,7 +25,6 @@ public class MagicMirror extends ImageView {
     private int corner;
     private int borderWidth;
     private int borderColor;
-    private Paint borderPaint;
     private Mirror mirror;
 
     public MagicMirror(Context context) {
@@ -43,7 +42,11 @@ public class MagicMirror extends ImageView {
         corner = dp2px(typedArray.getDimension(R.styleable.MagicMirror_corner, 0));
         borderWidth = dp2px(typedArray.getDimension(R.styleable.MagicMirror_borderWidth, 0));
         borderColor = typedArray.getColor(R.styleable.MagicMirror_borderColor, 0xffffff);
-        mirror = MirrorFactory.getMirror(sharpCode);
+        mirror = MirrorFactory.getMirror(sharpCode)
+                .setCorner(corner)
+                .setBorderWidth(borderWidth)
+                .setBorderColor(borderColor);
+
         //TODO 把参数都放入Mirror中
         typedArray.recycle();
     }
@@ -55,7 +58,7 @@ public class MagicMirror extends ImageView {
         Canvas canvas = new Canvas(mOutBitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         //Dst
-        mirror.drawSolid(canvas, getWidth(), getHeight(), corner);
+        mirror.drawSolid(canvas);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         //Src
         canvas.drawBitmap(mBitmap, 0, 0, paint);
@@ -66,7 +69,7 @@ public class MagicMirror extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(mOutBitmap, 0, 0, null);
-        mirror.drawStroke(canvas, getWidth(), getHeight(), corner, borderWidth, borderPaint);
+        mirror.drawStroke(canvas);
     }
 
     private Bitmap drawable2Bitmap(Drawable drawable) {
@@ -83,22 +86,15 @@ public class MagicMirror extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(mirror.getMirrorMeasuredWidth(this), mirror.getMirrorMeasuredHeight(this));
+        setMeasuredDimension(mirror.getMeasuredMirrorWidth(this), mirror.getMeasuredMirrorHeight(this));
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         initBitmap();
-        initBorderPaint();
     }
 
-    private void initBorderPaint() {
-        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        borderPaint.setStrokeWidth(borderWidth);
-        borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setColor(borderColor);
-    }
 
     protected int dp2px(float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());

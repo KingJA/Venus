@@ -10,24 +10,27 @@ import android.graphics.Paint;
  * Email:kingjavip@gmail.com
  */
 public class CircleMirror extends Mirror {
-
+    private int mCircleMirrorWidth;
+    private int mCircleMirrorHeight;
     @Override
-    int getMirrorMeasuredWidth(MagicMirror magicMirror) {
-        return Math.min(magicMirror.getMeasuredWidth(), magicMirror.getMeasuredHeight());
+    int getMeasuredMirrorWidth(MagicMirror magicMirror) {
+        this.mCircleMirrorWidth=Math.min(magicMirror.getMeasuredWidth(), magicMirror.getMeasuredHeight());
+        return mCircleMirrorWidth;
     }
 
     @Override
-    int getMirrorMeasuredHeight(MagicMirror magicMirror) {
-        return Math.min(magicMirror.getMeasuredWidth(), magicMirror.getMeasuredHeight());
+    int getMeasuredMirrorHeight(MagicMirror magicMirror) {
+        this.mCircleMirrorHeight=Math.min(magicMirror.getMeasuredWidth(), magicMirror.getMeasuredHeight());
+        return mCircleMirrorHeight;
     }
 
     @Override
-    void drawSolid(Canvas canvas, int width, int height,int corner) {
-        canvas.drawCircle(width * 0.5f, height* 0.5f, width * 0.5f, paint);
+    void drawSolid(Canvas canvas) {
+        canvas.drawCircle(mCircleMirrorWidth * 0.5f, mCircleMirrorHeight* 0.5f, mCircleMirrorWidth * 0.5f, new Paint(Paint.ANTI_ALIAS_FLAG));
     }
 
     @Override
-    void drawStroke(Canvas canvas, int width, int height, int corner, int borderWidth, Paint borderPaint) {
-        canvas.drawCircle(width * 0.5f, width * 0.5f,width * 0.5f - borderWidth*0.5f, borderPaint);
+    void drawStroke(Canvas canvas) {
+        canvas.drawCircle(mCircleMirrorWidth * 0.5f, mCircleMirrorWidth * 0.5f,mCircleMirrorWidth * 0.5f - getBorderWidth()*0.5f, getStrokePaint());
     }
 }
