@@ -27,12 +27,12 @@ public class RoundRectMirror extends Mirror {
 
     @Override
     void drawSolid(Canvas canvas) {
-        canvas.drawRoundRect(new RectF(0, 0, mRoundRectMirrorWidth, mRoundRectMirrorHeight), getCorner(), getCorner(), new Paint(Paint.ANTI_ALIAS_FLAG));
+        canvas.drawRoundRect(new RectF(getBorderWidth()*0.5f, getBorderWidth()*0.5f, mRoundRectMirrorWidth-getBorderWidth()*0.5f, mRoundRectMirrorHeight-getBorderWidth()*0.5f), getCorner(), getCorner(), new Paint(Paint.ANTI_ALIAS_FLAG));
     }
 
     @Override
     void drawStroke(Canvas canvas) {
-        canvas.drawRoundRect(new RectF(getBorderWidth()*0.5f, getBorderWidth()*0.5f, mRoundRectMirrorWidth - getBorderWidth()*0.5f, mRoundRectMirrorHeight - getBorderWidth()*0.5f), (getCorner()*(mRoundRectMirrorWidth-getOffset()))/mRoundRectMirrorWidth, (getCorner()*(mRoundRectMirrorHeight-getOffset()))/mRoundRectMirrorHeight, getStrokePaint());
+        canvas.drawRoundRect(new RectF(getBorderWidth()*0.5f, getBorderWidth()*0.5f, mRoundRectMirrorWidth - getBorderWidth()*0.5f, mRoundRectMirrorHeight - getBorderWidth()*0.5f),getCorner(), getCorner(), getStrokePaint());
     }
 
     private int getOffset() {

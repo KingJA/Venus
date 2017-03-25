@@ -3,26 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="#17f2b8">
+    android:background="#17f2b8"
+    android:gravity="center">
 
     <com.kingja.magicmirror.MagicMirror
         android:background="#b76868"
-        app:sharp="circle"
+        app:corner="20dp"
+        app:sharp="roundRect"
         app:borderColor="#5c648e"
         app:borderWidth="2dp"
-        android:scaleType="centerCrop"
         android:src="@mipmap/country"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_width="250dp"
+        android:layout_height="150dp"/>
 
+
+    <com.kingja.magicmirror.ShaderMirror
+        app:mirrorCorner="20dp"
+        app:mirrorBorderWidth="2dp"
+        app:mirrorBorderColor="#5c648e"
+        android:background="#b76868"
+        android:layout_marginTop="8dp"
+        android:src="@mipmap/country"
+        android:layout_width="250dp"
+        android:layout_height="150dp"/>
     <com.kingja.magicmirror.MagicMirror
+        android:visibility="gone"
         android:background="#b76868"
         app:borderWidth="2dp"
         app:borderColor="#5c648e"
         app:corner="10dp"
         app:sharp="roundRect"
-        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/country2"
         android:layout_width="150dp"
